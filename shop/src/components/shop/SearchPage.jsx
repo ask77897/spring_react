@@ -9,7 +9,7 @@ const SearchPage = () => {
     const getList = async () => {
         const res = await axios(`/search/list.json?page=${page}&size=5&query=${query}`)
         //console.log(res.data);
-        const data = res.data.items;
+        const data = res.data.items.map(s=>s && {...s, title:stripHtmlTags(s.title)});
         setList(data);
     }
 
@@ -22,11 +22,16 @@ const SearchPage = () => {
         }
     }
     const onRegister = async (shop) => {
-        if(window.confirm("상품을 등록하시겠습니까?")){
+        if (window.confirm("상품을 등록하시겠습니까?")) {
             //console.log(shop);
             await axios.post("/shop/insert", shop);
             alert("상품등록 완료");
         }
+    }
+    // HTML 태그를 제거하는 함수
+    const stripHtmlTags = (htmlString) => {
+        const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+        return doc.body.textContent || "";
     }
 
     useEffect(() => {
@@ -62,10 +67,10 @@ const SearchPage = () => {
                         <tr key={s.productId}>
                             <td>{s.productId}</td>
                             <td><img src={s.image} alt='' width="50" /></td>
-                            <td><div className='ellipsis'>{s.title}</div></td>
+                            <td><div className='ellipsis2'>{s.title}</div></td>
                             <td>{s.lprice}</td>
                             <td>{s.maker}</td>
-                            <td><Button className='btn-sm' onClick={()=>onRegister(s)}>상품등록</Button></td>
+                            <td><Button className='btn-sm' onClick={() => onRegister(s)}>상품등록</Button></td>
                         </tr>
                     )}
                 </tbody>
