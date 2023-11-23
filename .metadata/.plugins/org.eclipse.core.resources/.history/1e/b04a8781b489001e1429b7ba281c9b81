@@ -1,0 +1,10 @@
+package com.example.service;
+
+import org.springframework.stereotype.Service;
+
+import com.example.domain.ShopVO;
+
+@Service
+public interface ShopService {
+	public void insert(ShopVO vo);
+}

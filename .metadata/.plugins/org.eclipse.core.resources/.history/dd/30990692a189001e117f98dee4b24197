@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+</head>
+
+<body>
+	<h1>상품검색</h1>
+</body>
+<script>
+	getList();
+	function getList(){
+		
+		$.ajax({
+			type:'get',
+			url:"/search/list.json",
+			dataType:"json",
+			success:function(data){
+				console.log(data);
+			}
+		})
+	}
+</script>
+</html>

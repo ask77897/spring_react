@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+</head>
+
+<body>
+	<h1>상품검색</h1>
+	<table id="tbl_shop"></table>
+</body>
+<script id="temp_shop" type="x-handlebars-template">
+	{{#each items}}
+		<tr>
+			<td>{{title}}</td>
+		</tr>
+	{{/each}}
+</script>
+<script>
+	let page = 2;
+	let size = 5;
+	let query = "노트북";
+	getList();
+	function getList(){
+		
+		$.ajax({
+			type:'get',
+			url:"/search/list.json",
+			dataType:"json",
+			data:{page, size, query},
+			success:function(data){
+				const temp = Handlebars.compile($("#temp_shop").html());
+				$("#tbl_shop").html(temp(data));
+			}
+		})
+	}
+</script>
+</html>

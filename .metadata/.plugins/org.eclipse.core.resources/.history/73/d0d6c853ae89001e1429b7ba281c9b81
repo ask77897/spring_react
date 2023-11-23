@@ -1,0 +1,18 @@
+package com.example.dao;
+
+import com.example.domain.ShopVO;
+
+@Repository
+public class ShopDAOImpl implements ShopDAO {
+	@Autowired
+	SqlSession session;
+	String namespace="com.example.mapper.ShopMapper";
+	
+	
+	@Override
+	public void insert(ShopVO vo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,59 @@
+
+
+.MarketplaceViewer,
+.MarketplaceViewer > *,
+.MarketplaceItem,
+.MarketplaceItem * {
+background-color: #2c0c55;
+color: #d8c1f6;
+}
+
+.MarketplaceItem Link {
+color: #863fe4;
+}
+.MarketplaceItem .disabled {
+color: #a067e9;
+}
+
+.TagsToolTip,
+.TagsToolTip * {
+background-color: #3e1178;
+color: #d8c1f6;
+}
+
+.NotificationItem,
+.NotificationItem * {
+background-color: #434f5e;
+color: #9ac9d8;
+}
+
+.CatalogSwitcher,
+.CatalogSwitcher > ScrolledComposite,
+.CatalogSwitcher > ScrolledComposite > *,
+.Catalog,
+.Catalog > * {
+background-color: #2c0c55;
+color: #d8c1f6;
+}
+
+.Catalog:checked,
+.Catalog:checked > * {
+background-color: COLOR-LIST-SELECTION;
+}
+
+#MarketplacePage CTabItem:selected,
+#MarketplaceContent,
+.MarketplaceSearchHeader,
+.MarketplaceSearchHeader > Label {
+background-color: '#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END';
+}
+
+#MarketplacePage CategoryItem,
+#MarketplacePage CategoryItem > GradientCanvas,
+#MarketplacePage CategoryItem > GradientCanvas > Label {
+/* SWT-BUG workaround: a style for background is not applied on GradientCanvas (CSS engine repaint issue) */
+background: '#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END';
+background-image: '#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END';
+background-color: '#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END';
+color: #d8c1f6;
+}
