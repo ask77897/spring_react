@@ -41,4 +41,28 @@ public class ShopDAOImpl implements ShopDAO {
 		return session.selectOne(namespace + ".total", vo);
 	}
 
+
+	@Override
+	public void delete(int pid) {
+		session.delete(namespace + ".delete", pid);
+	}
+
+
+	@Override
+	public HashMap<String, Object> read(int pid) {
+		return session.selectOne(namespace + ".read", pid);
+	}
+
+
+	@Override
+	public void update(ShopVO vo) {
+		session.update(namespace + ".update", vo);
+	}
+
+
+	@Override
+	public void image(ShopVO vo) {
+		session.update(namespace + ".image", vo);
+	}
+
 }

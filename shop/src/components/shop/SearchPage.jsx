@@ -1,16 +1,21 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Table, InputGroup, Form, Row, Col, Button } from 'react-bootstrap';
+import { Table, InputGroup, Form, Row, Col, Button, Spinner } from 'react-bootstrap';
 
 const SearchPage = () => {
     const [list, setList] = useState([]);
     const [query, setQuery] = useState("노트북");
     const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [cnt, setCnt] = useState(0);
     const getList = async () => {
+        setLoading(true);
         const res = await axios(`/search/list.json?page=${page}&size=5&query=${query}`)
         //console.log(res.data);
-        const data = res.data.items.map(s=>s && {...s, title:stripHtmlTags(s.title)});
+        let data = res.data.items.map(s => s && { ...s, title: stripHtmlTags(s.title) });
+        data = data.map(item => item && { ...item, checked: false });
         setList(data);
+        setLoading(false);
     }
 
     const onSubmit = (e) => {
@@ -28,6 +33,33 @@ const SearchPage = () => {
             alert("상품등록 완료");
         }
     }
+    const onChangeAll = (e) => {
+        //console.log(e.target.checked);
+        const data = list.map(item => item && { ...item, checked: e.target.checked });
+        setList(data);
+    }
+    const onChangeSingle = (e, productId) => {
+        const data = list.map(item => item.productId === productId ? { ...item, checked: e.target.checked } : item);
+        setList(data);
+    }
+    const onCheckedSave = async () => {
+        if (cnt === 0) {
+            alert("저장할 상품을 선택하세요.");
+        } else {
+            if (window.confirm(`${cnt}개 상품을 등록하시겠습니까?`)) {
+                setLoading(true);
+                for (const item of list) {
+                    if (item.checked) {
+                        //console.log(item);
+                        await axios.post("/shop/insert", item);
+                    }
+                }
+                setLoading(false);
+                alert("상품등록완료");
+                getList();
+            }
+        }
+    }
     // HTML 태그를 제거하는 함수
     const stripHtmlTags = (htmlString) => {
         const doc = new DOMParser().parseFromString(htmlString, 'text/html');
@@ -35,9 +67,20 @@ const SearchPage = () => {
     }
 
     useEffect(() => {
+        let chk = 0;
+        list.forEach(item => {
+            if (item.checked) chk++;
+        });
+        //console.log(chk)
+        setCnt(chk);
+    }, [list])
+
+    useEffect(() => {
         getList();
         // eslint-disable-next-line
     }, [page])
+
+    if (loading) return <div className='text-center my-5'><Spinner /></div>
     return (
         <div className='my-5'>
             <h1 className='text-center mb-5'>상품검색</h1>
@@ -51,20 +94,22 @@ const SearchPage = () => {
                     </form>
                 </Col>
             </Row>
-            <Table striped bordered hover>
+            <Table striped bordered>
                 <thead>
                     <tr>
+                        <td><input type='checkbox' onChange={onChangeAll} checked={list.length === cnt} /></td>
                         <td>ID</td>
                         <td>이미지</td>
                         <td>품명</td>
                         <td>가격</td>
                         <td>제조사</td>
-                        <td>상품등록</td>
+                        <td><Button onClick={onCheckedSave} className='btn-sm'>선택상품등록</Button></td>
                     </tr>
                 </thead>
                 <tbody>
                     {list.map(s =>
                         <tr key={s.productId}>
+                            <td><input type='checkbox' checked={s.checked} onChange={(e) => { onChangeSingle(e, s.productId) }} /></td>
                             <td>{s.productId}</td>
                             <td><img src={s.image} alt='' width="50" /></td>
                             <td><div className='ellipsis2'>{s.title}</div></td>

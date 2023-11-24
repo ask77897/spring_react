@@ -19,4 +19,19 @@
     	from shop
     	where title like concat("%",#{query},"%") or maker like concat("%",#{query},"%")
     </select>
+    <delete id="delete">
+    	delete from shop where pid=#{pid}
+    </delete>
+    <select id="read" resultType="hashmap">
+    	select *, date_format(regdate, '%Y-%m-%d %T') fmtdate, format(lprice, 0) fmtprice 
+    	from shop 
+    	where pid=#{pid}
+    </select>
+    <update id="update">
+    	update shop set title=#{title}, lprice=#{lprice}, maker=#{maker}
+    	where pid=#{pid}
+    </update>
+    <update id="image">
+    	update shop set image=#{image} where pid=#{pid}
+    </update>
 </mapper>
