@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,6 +8,8 @@ import ShopList from './shop/ShopList';
 import ShopUpdate from './shop/ShopUpdate';
 import LoginPage from './user/LoginPage';
 import { getCookie, delCookie } from '../common';
+import HomePage from './HomePage';
+import ShopInfo from './shop/ShopInfo';
 
 const NaviPage = () => {
     const location = useLocation();
@@ -20,15 +22,13 @@ const NaviPage = () => {
             window.location.href = "/";
         }
     }
-    useEffect(() => {
-        const uid = getCookie('uid');
-        sessionStorage.setItem("uid", uid);
-    }, [])
+    const uid = getCookie('uid');
+    if(uid) sessionStorage.setItem("uid", uid);
     return (
         <>
             <Navbar expand="lg" bg="primary" data-bs-theme="dark">
                 <Container fluid>
-                    <Navbar.Brand href="#">LOGO</Navbar.Brand>
+                    <Navbar.Brand href="/">LOGO</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav
@@ -55,7 +55,9 @@ const NaviPage = () => {
                 <Route path='/shop/search' element={<SearchPage />} />
                 <Route path='/shop/list' element={<ShopList />} />
                 <Route path='/shop/update/:pid' element={<ShopUpdate />} />
+                <Route path='/shop/info/:pid' element={<ShopInfo />} />
                 <Route path='/login' element={<LoginPage />} />
+                <Route path='/' element={<HomePage />} />
             </Routes>
         </>
     )

@@ -73,6 +73,7 @@ const ShopList = () => {
                         <td>상품명</td>
                         <td>상품가격</td>
                         <td>제조사</td>
+                        <td>조회수</td>
                         <td>등록일</td>
                         <td>삭제</td>
                     </tr>
@@ -89,6 +90,7 @@ const ShopList = () => {
                             </td>
                             <td className='text-end'>{s.fmtprice}원</td>
                             <td>{s.maker}</td>
+                            <td>{s.viewcnt}</td>
                             <td>{s.fmtdate}</td>
                             <td><Button className='btn-sm' variant='danger' onClick={()=>onDelete(s)}>삭제</Button></td>
                         </tr>    

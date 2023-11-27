@@ -39,3 +39,15 @@ a {
 .body{
 	cursor: pointer;
 }
+
+.price{
+	font-size: 0.8rem;
+}
+
+.heart{
+	color: hotpink;
+	cursor: pointer;
+}
+.heart2{
+	color: hotpink;
+}

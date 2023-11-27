@@ -15,30 +15,31 @@ import com.example.domain.QueryVO;
 import com.example.domain.ShopVO;
 
 @Service
-public class ShopServiceImpl implements ShopService{
+public class ShopServiceImpl implements ShopService {
 	@Autowired
 	ShopDAO dao;
-	
+
 	@Transactional
 	@Override
 	public void insert(ShopVO vo) {
 		int result = dao.check(vo.getProductId());
-		if(result==0) {
-			//이미지업로드
-			UUID uuid=UUID.randomUUID();
-			String image=uuid.toString().substring(0, 8) + ".jpg";
+		if (result == 0) {
+			// 이미지업로드
+			UUID uuid = UUID.randomUUID();
+			String image = uuid.toString().substring(0, 8) + ".jpg";
 			try {
-				URL url=new URL(vo.getImage());
+				@SuppressWarnings("deprecation")
+				URL url = new URL(vo.getImage());
 				InputStream is = url.openStream();
 				FileOutputStream fos = new FileOutputStream("c:/upload/shop/" + image);
 				int data;
-				while((data=is.read()) != -1) {
+				while ((data = is.read()) != -1) {
 					fos.write(data);
 				}
 				fos.close();
 				vo.setImage("/upload/shop/" + image);
 				dao.insert(vo);
-			}catch(Exception e) {
+			} catch (Exception e) {
 				System.out.println("이미지업로드 오류:" + e.toString());
 			}
 		}
@@ -51,6 +52,27 @@ public class ShopServiceImpl implements ShopService{
 		map.put("list", dao.list(vo));
 		map.put("total", dao.total(vo));
 		return map;
+	}
+
+	@Transactional
+	@Override
+	public HashMap<String, Object> read(int pid, String uid) {
+		dao.viewcnt(pid);
+		return dao.read(pid, uid);
+	}
+	
+	@Transactional
+	@Override
+	public void delfcnt(String uid, int pid) {
+		dao.delfcnt(uid, pid);
+		dao.upfcnt(pid, -1);
+	}
+	
+	@Transactional
+	@Override
+	public void fcnt(String uid, int pid) {
+		dao.fcnt(uid, pid);
+		dao.upfcnt(pid, 1);
 	}
 
 }

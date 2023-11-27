@@ -15,4 +15,9 @@ public interface ShopDAO {
 	public HashMap<String, Object> read(int pid);
 	public void update(ShopVO vo);
 	public void image(ShopVO vo);
+	public void viewcnt(int pid);
+	public HashMap<String, Object> read(int pid, String uid);
+	public void fcnt(String uid, int pid);
+	public void delfcnt(String uid, int pid);
+	public void upfcnt(int pid, int amount);
 }

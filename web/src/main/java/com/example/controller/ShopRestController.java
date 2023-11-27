@@ -45,9 +45,20 @@ public class ShopRestController {
 	public void insert(@RequestBody ShopVO vo) {
 		service.insert(vo);
 	}
+	
 	@PostMapping("/update")
 	public void update(@RequestBody ShopVO vo) {
 		dao.update(vo);
+	}
+	
+	@GetMapping("/insert/favorite")
+	public void insert(int pid, String uid) {
+		service.fcnt(uid, pid);
+	}
+	
+	@GetMapping("/delete/favorite")
+	public void delete(int pid, String uid) {
+		service.delfcnt(uid, pid);
 	}
 	
 	@GetMapping("/list.json")
@@ -62,5 +73,9 @@ public class ShopRestController {
 	@GetMapping("/read/{pid}")
 	public HashMap<String, Object> read(@PathVariable int pid) {
 		return dao.read(pid);
+	}
+	@GetMapping("/info/{pid}")
+	public HashMap<String, Object> info(@PathVariable int pid, String uid) {
+		return service.read(pid, uid);
 	}
 }

@@ -5,6 +5,9 @@
     	insert into shop(productId, title, image, lprice, maker)
     	values(#{productId}, #{title}, #{image}, #{lprice}, #{maker})
     </insert>
+    <insert id="fcnt">
+    	insert into favorite(uid, pid) values(#{uid}, #{pid})
+    </insert>
     <select id="check" resultType="int">
     	select count(*) from shop where productId=#{productId}
     </select>
@@ -22,8 +25,17 @@
     <delete id="delete">
     	delete from shop where pid=#{pid}
     </delete>
+    <delete id="delfcnt">
+    	delete from favorite where uid=#{uid} and pid=#{pid}
+    </delete>
     <select id="read" resultType="hashmap">
     	select *, date_format(regdate, '%Y-%m-%d %T') fmtdate, format(lprice, 0) fmtprice 
+    	from shop 
+    	where pid=#{pid}
+    </select>
+    <select id="info" resultType="hashmap">
+    	select *, date_format(regdate, '%Y-%m-%d %T') fmtdate, format(lprice, 0) fmtprice,
+    	(select count(*) from favorite where uid=#{uid} and pid=#{pid}) ucnt 
     	from shop 
     	where pid=#{pid}
     </select>
@@ -33,5 +45,13 @@
     </update>
     <update id="image">
     	update shop set image=#{image} where pid=#{pid}
+    </update>
+    <update id="viewcnt">
+    	update shop set viewcnt = viewcnt + 1
+    	where pid=#{pid}
+    </update>
+    <update id="upfcnt">
+    	update shop set fcnt=fcnt + #{amount}
+    	where pid=#{pid}
     </update>
 </mapper>
