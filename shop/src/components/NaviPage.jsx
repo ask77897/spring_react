@@ -10,6 +10,7 @@ import LoginPage from './user/LoginPage';
 import { getCookie, delCookie } from '../common';
 import HomePage from './HomePage';
 import ShopInfo from './shop/ShopInfo';
+import CartList from './shop/CartList';
 
 const NaviPage = () => {
     const location = useLocation();
@@ -37,6 +38,7 @@ const NaviPage = () => {
                             navbarScroll>
                             <Nav.Link href="/shop/search" className={path.indexOf('/shop/search') !== -1 && 'active'}>상품검색</Nav.Link>
                             <Nav.Link href="/shop/list" className={path.indexOf('/shop/') !== -1 && 'active'}>상품관리</Nav.Link>
+                            <Nav.Link href="/cart/list" className={path.indexOf('/cart/') !== -1 && 'active'}>장바구니</Nav.Link>
                         </Nav>
                         <Nav>
                             {sessionStorage.getItem("uid") ?
@@ -52,12 +54,15 @@ const NaviPage = () => {
                 </Container>
             </Navbar>
             <Routes>
+                <Route path='/' element={<HomePage />} />
+                <Route path='/login' element={<LoginPage />} />
+
                 <Route path='/shop/search' element={<SearchPage />} />
                 <Route path='/shop/list' element={<ShopList />} />
                 <Route path='/shop/update/:pid' element={<ShopUpdate />} />
                 <Route path='/shop/info/:pid' element={<ShopInfo />} />
-                <Route path='/login' element={<LoginPage />} />
-                <Route path='/' element={<HomePage />} />
+
+                <Route path='/cart/list' element={<CartList/>}/>
             </Routes>
         </>
     )

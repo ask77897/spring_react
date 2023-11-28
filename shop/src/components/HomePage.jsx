@@ -4,7 +4,7 @@ import { Button, Card, Col, Form, InputGroup, Row, Spinner } from 'react-bootstr
 import "./Pagination.css";
 import Pagination from 'react-js-pagination';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { GoHeartFill } from "react-icons/go";
+import { GoHeartFill, GoComment } from "react-icons/go";
 
 const HomePage = () => {
     const location = useLocation();
@@ -63,8 +63,12 @@ const HomePage = () => {
                             </Card.Body>
                         </Link>
                         <Card.Footer>
-                            <GoHeartFill className='heart' />
-                            <small style={{fontSize:'0.7rem'}} >{shop.fcnt}</small>
+                            <div className='text-end'>
+                                <GoHeartFill className='heart' />
+                                <small style={{fontSize:'0.7rem'}} >{shop.fcnt}</small>
+                                <GoComment className='ms-2'/>
+                                <small style={{fontSize:'0.7rem'}}>{shop.reviewcnt}</small>
+                            </div>
                         </Card.Footer>
                     </Card>
                 </Col>

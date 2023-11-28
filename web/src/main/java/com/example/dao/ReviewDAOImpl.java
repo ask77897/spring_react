@@ -37,4 +37,31 @@ public class ReviewDAOImpl implements ReviewDAO{
 		return session.selectOne(namespace + ".total", pid);
 	}
 
+
+	@Override
+	public void delete(int cid) {
+		session.delete(namespace + ".delete", cid);
+	}
+
+
+	@Override
+	public void uprevcnt(int pid, int amount) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("pid", pid);
+		map.put("amount", amount);
+		session.update(namespace + ".uprevcnt", map);
+	}
+
+
+	@Override
+	public ReviewVO read(int cid) {
+		return session.selectOne(namespace + ".read", cid);
+	}
+
+
+	@Override
+	public void update(ReviewVO vo) {
+		session.update(namespace + ".update", vo);
+	}
+
 }

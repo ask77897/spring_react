@@ -1,6 +1,6 @@
 package com.example.domain;
 
-public class UserVO {
+public class UserVO extends QueryVO{
 	private String uid;
 	private String upass;
 	private String uname;

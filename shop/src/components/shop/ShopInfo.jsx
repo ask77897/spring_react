@@ -38,6 +38,14 @@ const ShopInfo = () => {
         alert("좋아요 취소");
         getShop();
     }
+    const onClickCart = async () => {
+        await axios.post("/cart/insert", {uid:sessionStorage.getItem("uid"), pid})
+        if(window.confirm("장바구니로 이동하시겠습니까?")){
+            window.location.href="/cart/list";
+        }else{
+            window.location.href="/";
+        }
+    }
 
     if (loading) return <div className='text-center my-5'><Spinner /></div>
     return (
@@ -61,9 +69,9 @@ const ShopInfo = () => {
                     <div>제조사 : {maker}</div>
                     <div>등록일 : {fmtdate}</div>
                     <hr />
-                    <div className='text-center'>
+                    <div className='text-center mb-5'>
                         <Button variant='warning px-5'>바로구매</Button>
-                        <Button variant='success px-5 ms-3'>장바구니</Button>
+                        <Button variant='success px-5 ms-3' onClick={onClickCart}>장바구니</Button>
                     </div>
                 </Col>
             </Row>

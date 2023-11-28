@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CartMapper">
+    <select id="now" resultType="hashmap">
+        select * from view_cart
+        order by regdate desc
+        limit #{start}, #{size}
+    </select>
+</mapper>

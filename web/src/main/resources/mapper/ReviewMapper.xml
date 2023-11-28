@@ -11,4 +11,19 @@
     <select id="total" resultType="int">
     	select count(*) from review where pid=#{pid}
     </select>
+    <select id="read" resultType="com.example.domain.ReviewVO">
+    	select * from review where cid = #{cid}
+    </select>
+    <delete id="delete">
+    	delete from review where cid=#{cid}
+    </delete>
+    <update id="uprevcnt">
+    	update shop set reviewcnt = reviewcnt + ${amount}
+    	where pid = #{pid}
+    </update>
+    <update id="update">
+    	update review
+    	set body=#{body}, regdate=now()
+    	where cid=#{cid}
+    </update>
 </mapper>

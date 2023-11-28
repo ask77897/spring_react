@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CartMapper">
+    <select id="list" resultType="hashmap">
+        select * from view_cart where uid=#{uid}
+        order by regdate desc limit #{start}, #{size}
+    </select>
+    <select id="total" resultType="int">
+    	select count(*) from cart where uid=#{uid}
+    </select>
+</mapper>

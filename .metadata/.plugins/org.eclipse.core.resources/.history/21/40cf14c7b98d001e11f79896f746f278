@@ -1,0 +1,13 @@
+package com.example.dao;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.example.domain.CartVO;
+import com.example.domain.UserVO;
+
+public interface CartDAO {
+	public List<HashMap<String, Object>> list(UserVO vo);
+	public int total(String uid);
+	public void insert(CartVO vo);
+}
