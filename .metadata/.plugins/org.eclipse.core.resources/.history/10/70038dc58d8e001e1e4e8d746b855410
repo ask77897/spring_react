@@ -1,0 +1,26 @@
+package com.example.dao;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.example.domain.OrderVO;
+import com.example.domain.PurchaseVO;
+
+@Repository
+public class PurchaseDAOImpl implements PurchaseDAO{
+	@Autowired
+	SqlSession session;
+	String namespace="com.example.mapper.PurchaseMapper";
+	
+	@Override
+	public void inpurchase(PurchaseVO vo) {
+		session.insert(namespace + ".inpurchase", vo);
+	}
+
+	@Override
+	public void inorder(OrderVO vo) {
+		session.insert(namespace + ".inorder", vo);
+	}
+
+}

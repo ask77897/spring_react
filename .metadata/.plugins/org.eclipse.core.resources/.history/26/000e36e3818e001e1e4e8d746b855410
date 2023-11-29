@@ -1,0 +1,7 @@
+package com.example.dao;
+
+import com.example.domain.PurchaseVO;
+
+public interface PurchaseDAO {
+	public void insert(PurchaseVO vo);
+}

@@ -1,0 +1,9 @@
+package com.example.dao;
+
+import com.example.domain.OrderVO;
+import com.example.domain.PurchaseVO;
+
+public interface PurchaseDAO {
+	public void inpurchase(PurchaseVO vo);
+	public void inorder(OrderVO vo);
+}
