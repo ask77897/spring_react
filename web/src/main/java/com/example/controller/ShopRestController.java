@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,6 +52,28 @@ public class ShopRestController {
 		dao.update(vo);
 	}
 	
+	@PostMapping("/update/content")
+	public void upcontent(@RequestBody ShopVO vo) {
+		dao.upcontent(vo);
+	}
+	@PostMapping("/ckupload/{pid}")
+	public HashMap<String, Object> ckupload(@PathVariable int pid, MultipartHttpServletRequest multi) {
+		HashMap<String, Object> map = new HashMap<>();
+		MultipartFile file = multi.getFile("upload");
+		String path = "/upload/shop/" + pid + "/";
+		File filePath = new File(path);
+		if(!filePath.exists()) filePath.mkdir();
+		String fileName = System.currentTimeMillis() + ".jpg";
+		try {
+			file.transferTo(new File("c:" + path + fileName));
+			map.put("uploaded", 1);
+			map.put("url", "/display?file=" + path + fileName);
+		}catch (Exception e){
+			System.out.println("ckupload : " + e.toString());
+		}
+		return map;
+	}
+	
 	@GetMapping("/insert/favorite")
 	public void insert(int pid, String uid) {
 		service.fcnt(uid, pid);
@@ -77,5 +100,9 @@ public class ShopRestController {
 	@GetMapping("/info/{pid}")
 	public HashMap<String, Object> info(@PathVariable int pid, String uid) {
 		return service.read(pid, uid);
+	}
+	@GetMapping("/chart1")
+	public List<HashMap<String, Object>> chart1(){
+		return dao.chart1();
 	}
 }

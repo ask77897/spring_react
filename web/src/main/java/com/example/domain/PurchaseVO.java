@@ -10,13 +10,23 @@ public class PurchaseVO {
 	private String address1;
 	private String address2;
 	private int sum;
+	private int status;
 	private List<OrderVO> orders;
+
 	
 	@Override
 	public String toString() {
 		return "PurchaseVO [oid=" + oid + ", uid=" + uid + ", uname=" + uname + ", phone=" + phone + ", address1="
-				+ address1 + ", address2=" + address2 + ", sum=" + sum + ", orders=" + orders + "]";
+				+ address1 + ", address2=" + address2 + ", sum=" + sum + ", status=" + status + ", orders=" + orders
+				+ "]";
 	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
 	public String getOid() {
 		return oid;
 	}

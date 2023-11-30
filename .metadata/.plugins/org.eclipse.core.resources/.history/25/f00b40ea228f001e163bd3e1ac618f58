@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.PurchaseMapper">
+    <insert id="inpurchase">
+    	insert into purchase(oid, uid, uname, phone, address1, address2, sum)
+    	values(#{oid}, #{uid}, #{uname}, #{phone}, #{address1}, #{address2}, #{sum})
+    </insert>
+    <insert id="inorder">
+    	insert into orders(oid, pid, lprice, qnt)
+    	values(#{oid}, #{pid}, #{lprice}, #{qnt})
+    </insert>
+    <select id="lipurchase" resultType="hashmap">
+    	select * from view_purchase where uid=#{uid} order by regdate desc limit #{start}, #{size};
+    </select>
+    <select id="liorders" resultType="hashmap">
+    	select * from view_orders where oid=#{oid};
+    </select>
+    <select id="topurchase" resultType="int">
+    	select count(*) from purchase where uid=#{uid}
+    </select>
+    <select id="listadmin" resultType="hashmap">
+    	select * from view_puchase
+    	<if test="key=='uid'">
+	    	where uid like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='oid'">
+	    	where oid like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='status'">
+	    	where status like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='address1'">
+	    	where address1 like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='phone'">
+	    	where phone like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='uname'">
+	    	where uname like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='str_status'">
+	    	where str_status like concat('%', #{query}, '%')
+    	</if>
+    	order by regdate desc
+    	limit #{start}, #{size}
+    </select>
+</mapper>

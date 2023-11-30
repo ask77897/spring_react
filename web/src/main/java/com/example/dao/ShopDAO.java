@@ -20,4 +20,6 @@ public interface ShopDAO {
 	public void fcnt(String uid, int pid);
 	public void delfcnt(String uid, int pid);
 	public void upfcnt(int pid, int amount);
+	public void upcontent(ShopVO vo);
+	public List<HashMap<String, Object>> chart1();
 }

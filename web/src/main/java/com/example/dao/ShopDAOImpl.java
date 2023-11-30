@@ -107,4 +107,14 @@ public class ShopDAOImpl implements ShopDAO {
 		session.update(namespace + ".upfcnt", map);
 	}
 
+	@Override
+	public void upcontent(ShopVO vo) {
+		session.update(namespace + ".upcontent", vo);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> chart1() {
+		return session.selectList(namespace + ".chart1");
+	}
+
 }

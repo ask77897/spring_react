@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.domain.OrderVO;
 import com.example.domain.PurchaseVO;
+import com.example.domain.QueryVO;
 import com.example.domain.UserVO;
 
 @Repository
@@ -41,6 +42,22 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 	@Override
 	public List<HashMap<String, Object>> liorders(String oid) {
 		return session.selectList(namespace + ".liorders", oid);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> liadmin(QueryVO vo) {
+		vo.setStart((vo.getPage()-1) * vo.getSize());
+		return session.selectList(namespace + ".liadmin", vo);
+	}
+
+	@Override
+	public int toadmin(QueryVO vo) {
+		return session.selectOne(namespace + ".toadmin", vo);
+	}
+
+	@Override
+	public void upstatus(PurchaseVO vo) {
+		session.update(namespace + ".upstatus", vo);
 	}
 
 }

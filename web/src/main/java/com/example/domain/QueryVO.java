@@ -1,6 +1,7 @@
 package com.example.domain;
 
 public class QueryVO { //DTO
+	private String key; 
 	private String query;
 	private int size;
 	private int page;
@@ -8,7 +9,15 @@ public class QueryVO { //DTO
 	
 	@Override
 	public String toString() {
-		return "QueryVO [query=" + query + ", size=" + size + ", page=" + page + ", start=" + start + "]";
+		return "QueryVO [key=" + key + ", query=" + query + ", size=" + size + ", page=" + page + ", start=" + start
+				+ "]";
+	}
+	public String getKey() {
+		return key;
+	}
+	
+	public void setKey(String key) {
+		this.key = key;
 	}
 	
 	public String getQuery() {

@@ -10,13 +10,22 @@ public class ShopVO {
 	private int lprice;
 	private String maker;
 	private Date regdate;
-	
+	private String content;
+
 	@Override
 	public String toString() {
 		return "ShopVO [pid=" + pid + ", productId=" + productId + ", title=" + title + ", image=" + image + ", lprice="
-				+ lprice + ", maker=" + maker + ", regdate=" + regdate + "]";
+				+ lprice + ", maker=" + maker + ", regdate=" + regdate + ", content=" + content + "]";
 	}
 	
+	
+	public String getContent() {
+		return content;
+	}
+	
+	public void setContent(String content) {
+		this.content = content;
+	}
 	public int getPid() {
 		return pid;
 	}

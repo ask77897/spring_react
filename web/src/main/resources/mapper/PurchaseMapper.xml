@@ -10,8 +10,7 @@
     	values(#{oid}, #{pid}, #{lprice}, #{qnt})
     </insert>
     <select id="lipurchase" resultType="hashmap">
-    	select *, format(sum, 0) as fmtsum, date_format(regdate, '%Y-%m-%d %T') as fmtdate
-    	from purchase where uid=#{uid} order by regdate desc limit #{start}, #{size};
+    	select * from view_purchase where uid=#{uid} order by regdate desc limit #{start}, #{size};
     </select>
     <select id="liorders" resultType="hashmap">
     	select * from view_orders where oid=#{oid};
@@ -19,4 +18,58 @@
     <select id="topurchase" resultType="int">
     	select count(*) from purchase where uid=#{uid}
     </select>
+    <select id="liadmin" resultType="hashmap">
+    	select * from view_purchase
+    	<if test="key=='uid'">
+	    	where uid like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='oid'">
+	    	where oid like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='status'">
+	    	where status like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='address1'">
+	    	where address1 like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='phone'">
+	    	where phone like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='uname'">
+	    	where uname like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='str_status'">
+	    	where str_status like concat('%', #{query}, '%')
+    	</if>
+    	order by regdate desc
+    	limit #{start}, #{size}
+    </select>
+    <select id="toadmin" resultType="int">
+    	select count(*) from view_purchase
+    	<if test="key=='uid'">
+	    	where uid like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='oid'">
+	    	where oid like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='status'">
+	    	where status like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='address1'">
+	    	where address1 like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='phone'">
+	    	where phone like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='uname'">
+	    	where uname like concat('%', #{query}, '%')
+    	</if>
+    	<if test="key=='str_status'">
+	    	where str_status like concat('%', #{query}, '%')
+    	</if>
+    </select>
+    <update id="upstatus">
+    	update purchase set status = #{status}
+    	where oid=#{oid}
+    </update>
 </mapper>

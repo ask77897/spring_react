@@ -18,10 +18,11 @@ const ModalOrder = ({ p }) => {
 
     useEffect(() => {
         getOrders();
+        //eslint-disable-next-line
     }, [])
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            <Button variant="primary btn-sm" onClick={handleShow}>
                 상세보기
             </Button>
 

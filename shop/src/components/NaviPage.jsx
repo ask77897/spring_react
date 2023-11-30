@@ -15,6 +15,8 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import MyPage from './user/MyPage';
 import OrderComplete from './order/OrderComplete';
 import OrderList from './order/OrderList';
+import AdminOrderList from './admin/OrderList';
+import ChartExample from './chart/ChartExample';
 
 const NaviPage = () => {
     const location = useLocation();
@@ -28,7 +30,7 @@ const NaviPage = () => {
         }
     }
     const uid = getCookie('uid');
-    if(uid) sessionStorage.setItem("uid", uid);
+    if (uid) sessionStorage.setItem("uid", uid);
     return (
         <>
             <Navbar expand="lg" bg="primary" data-bs-theme="dark">
@@ -40,14 +42,24 @@ const NaviPage = () => {
                             className="me-auto my-2 my-lg-0"
                             style={{ maxHeight: '100%' }}
                             navbarScroll>
-                            <Nav.Link href="/shop/search" className={path.indexOf('/shop/search') !== -1 && 'active'}>상품검색</Nav.Link>
-                            <Nav.Link href="/shop/list" className={path.indexOf('/shop/') !== -1 && 'active'}>상품관리</Nav.Link>
-                            <Nav.Link href="/order/list" className={path.indexOf('/order/') !== -1 && 'active'}>주문목록</Nav.Link>
+                            {sessionStorage.getItem('uid') === 'admin' &&
+                                <>
+                                    <Nav.Link href="/shop/search" className={path.indexOf('/shop/search') !== -1 && 'active'}>상품검색</Nav.Link>
+                                    <Nav.Link href="/shop/list" className={path.indexOf('/shop/') !== -1 && 'active'}>상품관리</Nav.Link>
+                                    <Nav.Link href="/admin/purchase" className={path.indexOf('/admin/') !== -1 && 'active'}>주문관리</Nav.Link>
+                                    <Nav.Link href="/admin/chart" className={path.indexOf('/admin/') !== -1 && 'active'}>그래프</Nav.Link>
+                                </>
+                            }
+                            {(sessionStorage.getItem("uid") && sessionStorage.getItem('uid') !== 'admin') &&
+                                <Nav.Link href="/order/list" className={path.indexOf('/order/') !== -1 && 'active'}>주문목록</Nav.Link>
+                            }
                         </Nav>
                         <Nav>
                             {sessionStorage.getItem("uid") ?
                                 <>
-                                    <Nav.Link href="/cart/list" className={path.indexOf('/cart/') !== -1 && 'active'}><MdOutlineShoppingCart /></Nav.Link>
+                                    {(sessionStorage.getItem("uid") && sessionStorage.getItem('uid') !== 'admin') &&
+                                        <Nav.Link href="/cart/list" className={path.indexOf('/cart/') !== -1 && 'active'}><MdOutlineShoppingCart /></Nav.Link>
+                                    }
                                     <Nav.Link href="/mypage" className='active'>{sessionStorage.getItem("uid")}</Nav.Link>
                                     <Nav.Link href="/logout" onClick={onLogout}>로그아웃</Nav.Link>
                                 </>
@@ -68,9 +80,12 @@ const NaviPage = () => {
                 <Route path='/shop/update/:pid' element={<ShopUpdate />} />
                 <Route path='/shop/info/:pid' element={<ShopInfo />} />
 
-                <Route path='/cart/list' element={<CartList/>}/>
-                <Route path='/order/complete/:oid' element={<OrderComplete/>}/>
-                <Route path='/order/list' element={<OrderList/>}/>
+                <Route path='/cart/list' element={<CartList />} />
+                <Route path='/order/complete/:oid' element={<OrderComplete />} />
+                <Route path='/order/list' element={<OrderList />} />
+
+                <Route path='/admin/purchase' element={<AdminOrderList/>}/>
+                <Route path='/admin/chart' element={<ChartExample/>}/>
             </Routes>
         </>
     )

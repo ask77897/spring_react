@@ -9,7 +9,7 @@ const ShopInfo = () => {
     const { pid } = useParams();
     const [shop, setShop] = useState('');
     const [loading, setLoading] = useState(false);
-    const { title, maker, image, fmtprice, fmtdate, ucnt, fcnt } = shop;
+    const { title, maker, image, fmtprice, fmtdate, ucnt, fcnt, content } = shop;
 
     const getShop = async () => {
         setLoading(true);
@@ -77,7 +77,7 @@ const ShopInfo = () => {
             </Row>
             <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
                 <Tab eventKey="home" title="상세설명">
-                    상세설명
+                    <div className='py-5 text-center' dangerouslySetInnerHTML={{ __html:content }}></div>
                 </Tab>
                 <Tab eventKey="profile" title="상품리뷰">
                     <ReviewPage pid={pid}/>

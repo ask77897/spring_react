@@ -36,17 +36,19 @@ const OrderList = () => {
                         <td>주문일자</td>
                         <td>전화</td>
                         <td>금액</td>
+                        <td>주문상태</td>
                         <td>상세보기</td>
                     </tr>
                 </thead>
                 <tbody>
                     {list.map(p =>
-                        <tr key={p.oid}>
+                        <tr key={p.oid} className='text-center'>
                             <td>{p.oid}</td>
                             <td>{p.uname}({p.uid})</td>
                             <td>{p.fmtdate}</td>
                             <td>{p.phone}</td>
                             <td className='text-end'>{p.fmtsum}원</td>
+                            <td>{p.str_status}</td>
                             <td><ModalOrder p={p} /></td>
                         </tr>
                     )}

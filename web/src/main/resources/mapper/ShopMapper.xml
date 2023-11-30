@@ -22,6 +22,10 @@
     	from shop
     	where title like concat("%",#{query},"%") or maker like concat("%",#{query},"%")
     </select>
+    <select id="chart1" resultType="hashmap">
+    	select r.pid, title, count(*) as count from review r, shop s 
+    	where r.pid=s.pid group by pid order by pid asc;
+    </select>
     <delete id="delete">
     	delete from shop where pid=#{pid}
     </delete>
@@ -52,6 +56,10 @@
     </update>
     <update id="upfcnt">
     	update shop set fcnt=fcnt + #{amount}
+    	where pid=#{pid}
+    </update>
+    <update id="upcontent">
+    	update shop set content=#{content}
     	where pid=#{pid}
     </update>
 </mapper>
